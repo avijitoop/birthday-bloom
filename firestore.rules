@@ -1,0 +1,39 @@
+
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Birthday Collection
+    match /birthdays/{birthdayId} {
+
+      // Only the owner can read their birthday records
+      allow read: if request.auth != null
+        && resource.data.ownerUid == request.auth.uid;
+
+      // Only authenticated users can create their own records
+      allow create: if request.auth != null
+        && request.resource.data.ownerUid == request.auth.uid
+        && request.resource.data.name is string
+        && request.resource.data.birthDate is string
+        && request.resource.data.name.size() > 0
+        && request.resource.data.name.size() <= 100;
+
+      // Only the owner can update their records
+      allow update: if request.auth != null
+        && resource.data.ownerUid == request.auth.uid
+        && request.resource.data.ownerUid == resource.data.ownerUid
+        && request.resource.data.name is string
+        && request.resource.data.birthDate is string;
+
+      // Only the owner can delete their records
+      allow delete: if request.auth != null
+        && resource.data.ownerUid == request.auth.uid;
+    }
+
+    // Default: Deny all other access
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

@@ -1,0 +1,14 @@
+
+{
+  "name": "birthday-bloom-backend",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Birthday Bloom automatic notification backend",
+  "main": "send-birthday.js",
+  "scripts": {
+    "start": "node send-birthday.js"
+  },
+  "dependencies": {
+    "firebase-admin": "^13.0.0"
+  }
+}

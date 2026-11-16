@@ -1,0 +1,424 @@
+
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#7c3aed">
+  <meta name="description" content="Birthday Bloom - Automatic Birthday Wish and Reminder">
+
+  <title>Birthday Bloom | Wish & Reminder</title>
+
+  <link rel="stylesheet" href="style.css">
+  <link rel="manifest" href="manifest.json">
+</head>
+
+<body>
+
+  <div class="ambient ambient-one"></div>
+  <div class="ambient ambient-two"></div>
+
+  <!-- HEADER -->
+  <header class="topbar">
+
+    <a class="brand" href="#">
+      <span class="brand-icon">🎂</span>
+
+      <span>
+        Birthday <b>Bloom</b>
+        <small>Wish • Remember • Celebrate</small>
+      </span>
+    </a>
+
+    <div class="top-actions">
+
+      <button id="notifyBtn" type="button" class="btn btn-light">
+        🔔 Notification চালু
+      </button>
+
+      <button id="logoutBtn" type="button" class="btn btn-outline hidden">
+        Logout
+      </button>
+
+    </div>
+  </header>
+
+  <main class="container">
+
+    <!-- LOGIN / SIGNUP -->
+    <section id="authPanel" class="auth-card">
+
+      <div class="auth-art">
+        <div class="cake">🎂</div>
+
+        <p>
+          প্রিয় মানুষদের বিশেষ দিন
+          <br>
+          <strong>আর কখনো ভুলবেন না</strong>
+        </p>
+
+        <span>✨ 🎈 🎁</span>
+      </div>
+
+      <div class="auth-form">
+
+        <p class="eyebrow">YOUR FAMILY CELEBRATION SPACE</p>
+
+        <h1>স্বাগতম!</h1>
+
+        <p class="muted">
+          পরিবারের জন্মদিনগুলো এক জায়গায় রাখুন।
+        </p>
+
+        <label>
+          Email
+
+          <input
+            id="emailInput"
+            type="email"
+            placeholder="আপনার ইমেইল"
+            autocomplete="email"
+          >
+        </label>
+
+        <label>
+          Password
+
+          <input
+            id="passwordInput"
+            type="password"
+            placeholder="কমপক্ষে ৬ অক্ষর"
+            autocomplete="current-password"
+          >
+        </label>
+
+        <div class="auth-buttons">
+
+          <button id="loginBtn" type="button" class="btn btn-primary">
+            Login
+          </button>
+
+          <button id="signupBtn" type="button" class="btn btn-outline">
+            নতুন অ্যাকাউন্ট
+          </button>
+
+        </div>
+
+        <p id="authMessage" class="message"></p>
+
+      </div>
+    </section>
+
+
+    <!-- ADMIN DASHBOARD -->
+    <section id="appPanel" class="hidden">
+
+      <div class="hero">
+
+        <div>
+          <p class="eyebrow">A LITTLE JOY, ALL YEAR ROUND</p>
+
+          <h1>
+            জন্মদিন মনে রাখুন,
+            <br>
+            <span>ভালোবাসা ছড়িয়ে দিন।</span>
+          </h1>
+
+          <p>
+            আপনার পরিবারের প্রতিটি বিশেষ দিন এখন এক ক্লিক দূরে।
+          </p>
+        </div>
+
+        <div class="hero-art">
+          🎈 <div>🎂</div> 🎁
+        </div>
+
+      </div>
+
+
+      <!-- STATISTICS -->
+      <div class="stats">
+
+        <article class="stat-card">
+          <span>🎉</span>
+
+          <div>
+            <small>মোট জন্মদিন</small>
+            <strong id="totalCount">0</strong>
+          </div>
+        </article>
+
+        <article class="stat-card">
+          <span>🎂</span>
+
+          <div>
+            <small>এই মাসে</small>
+            <strong id="monthCount">0</strong>
+          </div>
+        </article>
+
+        <article class="stat-card">
+          <span>⏳</span>
+
+          <div>
+            <small>পরবর্তী জন্মদিন</small>
+            <strong id="nextName">—</strong>
+          </div>
+        </article>
+
+      </div>
+
+
+      <!-- BIRTHDAY LIST HEADING -->
+      <div class="section-heading">
+
+        <div>
+          <p class="eyebrow">YOUR PEOPLE</p>
+          <h2>পরিবারের জন্মদিন</h2>
+        </div>
+
+        <button id="addBtn" type="button" class="btn btn-primary">
+          ＋ জন্মদিন যোগ করুন
+        </button>
+
+      </div>
+
+
+      <!-- BIRTHDAY LIST -->
+      <section id="birthdayList" class="birthday-grid"></section>
+
+
+      <!-- EMPTY STATE -->
+      <section id="emptyState" class="empty-state">
+
+        <div>🌷</div>
+
+        <h3>এখনো কোনো জন্মদিন যোগ করা হয়নি</h3>
+
+        <p>
+          প্রথমে পরিবারের একজনের জন্মদিন যোগ করুন।
+        </p>
+
+        <button class="btn btn-primary" id="emptyAddBtn" type="button">
+          প্রথম জন্মদিন যোগ করুন
+        </button>
+
+      </section>
+
+      <p class="footnote">
+        🔒 আপনার তথ্য আপনার নিজের অ্যাকাউন্টের মধ্যেই সংরক্ষিত থাকে।
+      </p>
+
+    </section>
+
+
+    <!-- PUBLIC BIRTHDAY WISH PAGE -->
+    <section id="publicWishPanel" class="hidden">
+
+      <div class="birthday-card wish-page">
+
+        <div class="cake">🎂</div>
+
+        <p class="eyebrow">
+          A SPECIAL SURPRISE FOR YOU
+        </p>
+
+        <h1 id="publicWishTitle">
+          শুভ জন্মদিন! 🎉
+        </h1>
+
+        <p id="publicWishMessage">
+          তোমার জীবন আনন্দ ও ভালোবাসায় ভরে উঠুক।
+        </p>
+
+        <div id="publicWishDate"></div>
+
+
+        <!-- PUSH NOTIFICATION BUTTON -->
+        <div class="push-section">
+
+          <button
+            id="enablePushBtn"
+            type="button"
+            class="btn btn-primary"
+          >
+            🔔 Birthday Notification চালু করুন
+          </button>
+
+          <p
+            id="pushStatus"
+            class="message"
+            role="status"
+            aria-live="polite"
+          >
+            জন্মদিনের Notification পেতে এখানে ক্লিক করুন।
+          </p>
+
+        </div>
+
+
+        <p class="footnote">
+          Made with 💜 by Birthday Bloom
+        </p>
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <!-- ADD / EDIT BIRTHDAY DIALOG -->
+  <dialog id="birthdayDialog">
+
+    <form id="birthdayForm" method="dialog" class="dialog-form">
+
+      <div class="dialog-head">
+
+        <div>
+          <p class="eyebrow">MAKE THE DAY SPECIAL</p>
+          <h2 id="dialogTitle">নতুন জন্মদিন</h2>
+        </div>
+
+        <button
+          type="button"
+          id="closeDialog"
+          class="close-btn"
+        >
+          ×
+        </button>
+
+      </div>
+
+
+      <input type="hidden" id="editId">
+
+
+      <label>
+        নাম *
+
+        <input
+          id="personName"
+          required
+          maxlength="60"
+          placeholder="যেমন: মা / বাবা / দিদি"
+        >
+      </label>
+
+
+      <div class="form-row">
+
+        <label>
+          জন্মতারিখ *
+
+          <input id="birthDate" type="date" required>
+        </label>
+
+        <label>
+          সম্পর্ক
+
+          <select id="relation">
+            <option>পরিবার</option>
+            <option>বাবা</option>
+            <option>মা</option>
+            <option>ভাই</option>
+            <option>বোন</option>
+            <option>স্বামী/স্ত্রী</option>
+            <option>সন্তান</option>
+            <option>অন্যান্য</option>
+          </select>
+        </label>
+
+      </div>
+
+
+      <label>
+        ইমেইল (ঐচ্ছিক)
+
+        <input
+          id="personEmail"
+          type="email"
+          placeholder="ইমেইল"
+        >
+      </label>
+
+
+      <label>
+        মোবাইল নম্বর (ঐচ্ছিক)
+
+        <input
+          id="personPhone"
+          type="tel"
+          placeholder="+8801XXXXXXXXX"
+        >
+      </label>
+
+
+      <label>
+        ছবির URL (ঐচ্ছিক)
+
+        <input
+          id="personPhoto"
+          type="url"
+          placeholder="https://..."
+        >
+      </label>
+
+
+      <label>
+        বিশেষ নোট
+
+        <textarea
+          id="personNote"
+          rows="2"
+          placeholder="পছন্দের কিছু, বিশেষ স্মৃতি..."
+        ></textarea>
+      </label>
+
+
+      <p class="form-hint">
+        জন্মসাল জানা না থাকলেও জন্মতারিখ দিন।
+      </p>
+
+
+      <div class="dialog-actions">
+
+        <button
+          type="button"
+          id="cancelDialog"
+          class="btn btn-outline"
+        >
+          বাতিল
+        </button>
+
+        <button
+          type="submit"
+          class="btn btn-primary"
+        >
+          সংরক্ষণ করুন
+        </button>
+
+      </div>
+
+      <p id="formMessage" class="message"></p>
+
+    </form>
+
+  </dialog>
+
+
+  <!-- TOAST -->
+  <div id="toast" class="toast" role="status"></div>
+
+
+  <!-- FOOTER -->
+  <footer>
+    Made with 💜 for your favourite people · Birthday Bloom
+  </footer>
+
+
+  <!-- MAIN JAVASCRIPT -->
+  <script type="module" src="app.js"></script>
+
+</body>
+</html>
