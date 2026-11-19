@@ -40,7 +40,7 @@ function getBangladeshDate() {
 // Daily automatic birthday notification
 exports.sendBirthdayNotifications = onSchedule(
   {
-    schedule: "0 8 * * *",
+    schedule: "0 0 * * *",
     timeZone: "Asia/Dhaka",
     region: "asia-south1",
     timeoutSeconds: 300,

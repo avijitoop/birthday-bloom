@@ -1,0 +1,29 @@
+
+name: Birthday Bloom Daily Check
+
+on:
+  schedule:
+    - cron: "0 18 * * *"
+  workflow_dispatch:
+
+jobs:     
+  birthday-check:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        run: npm install --prefix functions
+
+      - name: Send birthday notifications
+        run: node functions/run-birthday-check.js
+        env:
+          FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+          BIRTHDAY_BLOOM_URL: ${{ vars.BIRTHDAY_BLOOM_URL }}
